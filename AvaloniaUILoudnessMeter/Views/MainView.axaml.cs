@@ -1,7 +1,6 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Media;
 
 namespace AvaloniaUILoudnessMeter.Views;
 
@@ -22,20 +21,28 @@ public partial class MainView : UserControl
         mChannelConfigButton = this.FindControl<Control>("ChannelConfigurationButton") ?? throw new Exception("Cannot find Channel Configuration Button Binding");
         mChannelConfigPopup = this.FindControl<Control>("ChannelConfigurationPopup") ?? throw new Exception("Cannot find Channel Configuration Popup Binding");
         mMainGrid = this.FindControl<Control>("MainGrid") ?? throw new Exception("Cannot find Main Grid Binding");
+
+        // Subscribe to LayoutUpdated to position the popup after layout is complete
+        LayoutUpdated += OnLayoutUpdated;
     }
 
-    public override void Render(DrawingContext context)
+    private void OnLayoutUpdated(object? sender, EventArgs e)
     {
-        base.Render(context);
-
         // Get relative position of button in relation to main grid
-        var position = mChannelConfigButton.TranslatePoint(new Point(), mMainGrid) ?? throw new Exception("Cannot get TranslatePoint from Configuration Button");
+        Point? position = mChannelConfigButton.TranslatePoint(new Point(), mMainGrid)
+            ?? throw new Exception("Cannot get TranslatePoint from Configuration Button");
 
         // Set margin of popup so it appears bottom left of button
-        mChannelConfigPopup.Margin = new Thickness(
-            position.X, 
-            0, 
-            0, 
-            mMainGrid.Bounds.Height - position.Y - mChannelConfigButton.Bounds.Height);
+        Thickness newMargin = new(
+            position.Value.X,
+            0,
+            0,
+            mMainGrid.Bounds.Height - position.Value.Y - mChannelConfigButton.Bounds.Height);
+
+        // Only update if margin actually changed to avoid unnecessary layout cycles
+        if (mChannelConfigPopup.Margin != newMargin)
+        {
+            mChannelConfigPopup.Margin = newMargin;
+        }
     }
 }
