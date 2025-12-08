@@ -1,0 +1,53 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:AvaloniaUILoudnessMeter">
+
+  <!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+  
+  <Design.PreviewWith>
+    <Border Background="{DynamicResource DarkBlueBrush}">      
+        <StackPanel>
+          <controls:LargeLabelControl Margin="5" />
+          <controls:LargeLabelControl Margin="5" Classes="button" />
+        </StackPanel>
+    </Border>
+  </Design.PreviewWith>
+  
+  <Style Selector="controls|LargeLabelControl">
+      <!-- Set default properties -->
+      <Setter Property="Background" Value="{DynamicResource MidBlueBrush}"/>
+      <Setter Property="Foreground" Value="White"/>
+      
+      <Setter Property="Template">
+      <ControlTemplate>
+         <Border Padding="15,7" Background="{DynamicResource MidBlueBrush}">
+            <StackPanel>
+			        <Label HorizontalAlignment="Center" Padding="0" FontSize="21" Content="{TemplateBinding LargeText}"/>
+			        <Label HorizontalAlignment="Center" Padding="0" FontSize="11" Content="{TemplateBinding SmallText}"/>
+           </StackPanel>
+         </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  
+  <Style Selector="controls|LargeLabelControl.button">
+    <!-- Set default properties -->
+    <Setter Property="Background" Value="{DynamicResource MidBlueBrush}"/>
+    <Setter Property="Foreground" Value="White"/>
+      
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel>
+          <Label Padding="15,3" CornerRadius="20" Background="{DynamicResource MidBlueBrush}" HorizontalAlignment="Center" FontSize="21" Content="{TemplateBinding LargeText}"/>
+          <Label HorizontalAlignment="Center" Margin="0,5,0,5" Padding="0" FontSize="11" Content="{TemplateBinding SmallText}"/>
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>
