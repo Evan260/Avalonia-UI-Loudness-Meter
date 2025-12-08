@@ -29,13 +29,11 @@ public partial class MainView : UserControl
     private void OnLayoutUpdated(object? sender, EventArgs e)
     {
         // Get relative position of button in relation to main grid
-        var position = mChannelConfigButton.TranslatePoint(new Point(), mMainGrid);
-
-        if (position == null)
-            return;
+        Point? position = mChannelConfigButton.TranslatePoint(new Point(), mMainGrid)
+            ?? throw new Exception("Cannot get TranslatePoint from Configuration Button");
 
         // Set margin of popup so it appears bottom left of button
-        var newMargin = new Thickness(
+        Thickness newMargin = new(
             position.Value.X,
             0,
             0,
