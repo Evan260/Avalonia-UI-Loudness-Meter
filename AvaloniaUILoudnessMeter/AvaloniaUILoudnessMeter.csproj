@@ -22,4 +22,10 @@
         <PackageReference Include="CommunityToolkit.Mvvm"/>
         <PackageReference Include="Svg.Controls.Skia.Avalonia" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Styles\AnimatedPopup.axaml.cs">
+        <DependentUpon>AnimatedPopup.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

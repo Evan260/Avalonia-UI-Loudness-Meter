@@ -12,6 +12,7 @@
      <Application.Styles>
          <FluentTheme />
          <StyleInclude Source="avares://AvaloniaUILoudnessMeter/Styles/LargeLabelControl.axaml"/>
+         <StyleInclude Source="avares://AvaloniaUILoudnessMeter/Styles/AnimatedPopup.axaml"/>
      </Application.Styles>
 
      <Application.Resources>
