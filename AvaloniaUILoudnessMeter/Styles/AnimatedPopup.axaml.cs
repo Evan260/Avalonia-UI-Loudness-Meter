@@ -7,7 +7,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AvaloniaUILoudnessMeter;
+namespace AvaloniaUILoudnessMeter.Styles;
 
 public partial class AnimatedPopup : ContentControl
 {
@@ -80,25 +80,25 @@ public partial class AnimatedPopup : ContentControl
     /// <summary>
     /// Indicates if the control is currently fully opened.
     /// </summary>
-    public bool IsOpened => _currentAnimationTick >= _totalTicks;
+    public bool IsFullyOpen => _currentAnimationTick >= _totalTicks;
 
-    #region Open
+    #region IsOpen
 
-    private bool _open;
+    private bool _isOpen;
 
-    public static readonly DirectProperty<AnimatedPopup, bool> OpenProperty =
+    public static readonly DirectProperty<AnimatedPopup, bool> IsOpenProperty =
         AvaloniaProperty.RegisterDirect<AnimatedPopup, bool>(
-            nameof(Open), o => o.Open, (o, v) => o.Open = v);
+            nameof(IsOpen), o => o.IsOpen, (o, v) => o.IsOpen = v);
 
     /// <summary>
     /// Property to set whether the control should be open or closed.
     /// </summary>
-    public bool Open
+    public bool IsOpen
     {
-        get => _open;
+        get => _isOpen;
         set
         {
-            if (value == _open)
+            if (value == _isOpen)
                 return;
 
             if (value)
@@ -120,12 +120,12 @@ public partial class AnimatedPopup : ContentControl
             }
             else
             {
-                if (IsOpened)
+                if (IsFullyOpen)
                     UpdateDesiredSize();
             }
 
             UpdateAnimation();
-            SetAndRaise(OpenProperty, ref _open, value);
+            SetAndRaise(IsOpenProperty, ref _isOpen, value);
         }
     }
 
@@ -133,7 +133,7 @@ public partial class AnimatedPopup : ContentControl
 
     #region Animation Time
 
-    private TimeSpan _animationTime = TimeSpan.FromSeconds(3);
+    private TimeSpan _animationTime = TimeSpan.FromMilliseconds(125);
 
     public static readonly DirectProperty<AnimatedPopup, TimeSpan> AnimationTimeProperty =
         AvaloniaProperty.RegisterDirect<AnimatedPopup, TimeSpan>(
@@ -171,7 +171,7 @@ public partial class AnimatedPopup : ContentControl
 
     #region Underlay Opacity
 
-    private double _underlayOpacity = 0.2;
+    private double _underlayOpacity;
 
     public static readonly DirectProperty<AnimatedPopup, double> UnderlayOpacityProperty =
         AvaloniaProperty.RegisterDirect<AnimatedPopup, double>(
@@ -193,15 +193,15 @@ public partial class AnimatedPopup : ContentControl
     #region Public Commands
 
     [RelayCommand]
-    public void BeginOpen()
+    public void Open()
     {
-        Open = true;
+        IsOpen = true;
     }
 
     [RelayCommand]
-    public void BeginClose()
+    public void Close()
     {
-        Open = false;
+        IsOpen = false;
     }
 
     #endregion
@@ -220,7 +220,7 @@ public partial class AnimatedPopup : ContentControl
             ZIndex = 9
         };
 
-        _underlayControl.PointerPressed += (sender, args) => BeginClose();
+        _underlayControl.PointerPressed += (sender, args) => Close();
 
         _animationTimer = new DispatcherTimer
         {
@@ -269,7 +269,7 @@ public partial class AnimatedPopup : ContentControl
     /// </summary>
     private void AnimationComplete()
     {
-        if (_open)
+        if (_isOpen)
         {
             Width = double.NaN;
             Height = double.NaN;
@@ -307,8 +307,8 @@ public partial class AnimatedPopup : ContentControl
             return;
         }
 
-        if ((_open && _currentAnimationTick >= _totalTicks) ||
-            (!_open && _currentAnimationTick == 0))
+        if ((_isOpen && _currentAnimationTick >= _totalTicks) ||
+            (!_isOpen && _currentAnimationTick == 0))
         {
             _animationTimer.Stop();
             AnimationComplete();
@@ -317,7 +317,7 @@ public partial class AnimatedPopup : ContentControl
         }
 
         _animating = true;
-        _currentAnimationTick += _open ? 1 : -1;
+        _currentAnimationTick += _isOpen ? 1 : -1;
 
         var percentageAnimated = (float)_currentAnimationTick / _totalTicks;
 

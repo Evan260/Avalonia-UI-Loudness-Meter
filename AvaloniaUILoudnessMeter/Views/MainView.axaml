@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AvaloniaUILoudnessMeter.ViewModels"
-             xmlns:controls="using:AvaloniaUILoudnessMeter"
+             xmlns:controls="using:AvaloniaUILoudnessMeter.Styles"
              mc:Ignorable="d" d:DesignWidth="1048" d:DesignHeight="630"
              x:Class="AvaloniaUILoudnessMeter.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -36,17 +36,24 @@
         <controls:AnimatedPopup
             Grid.Row="0"
             Grid.RowSpan="3" 
-            IsOpened="False"
+            IsOpen="False"
             Name="ChannelConfigurationPopup"
         >
             <Border Padding="20" Background="white" BorderThickness="1" BorderBrush="#ddd" CornerRadius="5" >
-                <StackPanel>
-                    <Label Foreground="Black" Content="Hello World"></Label>
-                    <Label Foreground="Black" Content="Hello World"></Label>
-                    <Label Foreground="Black" Content="Hello World"></Label>
-                    <Label Foreground="Black" Content="Hello World"></Label>
-                    <Label Foreground="Black" Content="Hello World"></Label>
-                </StackPanel>
+                <Expander>
+                    
+                    <Expander.Header>
+                        <Label Content="This is a long header text"></Label>
+                    </Expander.Header>
+                    
+                    <StackPanel>
+                        <Label Foreground="Black" Content="Hello World"></Label>
+                        <Label Foreground="Black" Content="Hello World"></Label>
+                        <Label Foreground="Black" Content="Hello World"></Label>
+                        <Label Foreground="Black" Content="Hello World"></Label>
+                        <Label Foreground="Black" Content="Hello World"></Label>
+                    </StackPanel>
+                </Expander>
             </Border>
         </controls:AnimatedPopup>
         
@@ -194,7 +201,7 @@
        <Grid Grid.Row="2" Margin="20,10" Height="40" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto,Auto">
            <Button Grid.Column="0" 
                    Name="ChannelConfigurationButton" 
-                   Command="{Binding #ChannelConfigurationPopup.BeginOpenCommand}">
+                   Command="{Binding #ChannelConfigurationPopup.OpenCommand}">
                Stereo
            </Button>
            <Button Grid.Column="1" Content="YouTube" />

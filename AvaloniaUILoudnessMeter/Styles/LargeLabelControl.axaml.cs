@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.Primitives;
 
-namespace AvaloniaUILoudnessMeter;
+namespace AvaloniaUILoudnessMeter.Styles;
 
 public class LargeLabelControl : TemplatedControl
 {
