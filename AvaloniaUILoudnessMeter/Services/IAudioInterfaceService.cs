@@ -9,5 +9,5 @@ public interface IAudioInterfaceService
     /// <summary>
     /// Fetch the channel configurations.
     /// </summary>
-    Task<List<ChannelConfigurationItem>> ChannelConfigurationListAsync();
+    Task<List<ChannelConfigurationItem>> GetChannelConfigurationListAsync();
 }

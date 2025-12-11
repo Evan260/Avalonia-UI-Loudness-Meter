@@ -1,4 +1,7 @@
-﻿using System.Threading.Channels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using AvaloniaUILoudnessMeter.DataModels;
 using AvaloniaUILoudnessMeter.Services;
 using CommunityToolkit.Mvvm.Collections;
@@ -15,7 +18,7 @@ public partial class MainViewModel : ObservableObject
 
     #endregion
     
-    #region  Public properties
+    #region Public properties
 
     [ObservableProperty]
     private string _boldTitle = "AVALONIA";
@@ -29,12 +32,37 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableGroupedCollection<string, ChannelConfigurationItem> _channelConfigurations;
     
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ChannelConfigurationButtonText))]
+    private ChannelConfigurationItem? _selectedChannelConfiguration;
+
+    public string ChannelConfigurationButtonText => SelectedChannelConfiguration?.ShortText ?? "Select Channel";
+    
     #endregion
     
-    #region Public properties
+    #region Public commands
     
     [RelayCommand]
     private void ChannelConfigurationButtonPressed() => ChannelConfigurationListIsOpen ^= true;
+
+    [RelayCommand]
+    private void ChannelConfigurationItemPressed(ChannelConfigurationItem item)
+    {
+        SelectedChannelConfiguration = item;
+        
+        // Close the menu
+        _channelConfigurationListIsOpen = false;
+    }
+
+    [RelayCommand]
+    private async Task LoadSettingsAsync()
+    {
+        var channelConfigurations = await _audioInterfaceService.GetChannelConfigurationListAsync();
+        
+        // Create a grouping from the flat data
+        ChannelConfigurations = new ObservableGroupedCollection<string, ChannelConfigurationItem>(
+            channelConfigurations.GroupBy( item => item.Group));
+    }
     
     #endregion
 

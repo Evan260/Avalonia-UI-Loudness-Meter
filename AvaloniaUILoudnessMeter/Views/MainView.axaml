@@ -40,20 +40,27 @@
             Name="ChannelConfigurationPopup"
         >
             <Border Padding="20" Background="white" BorderThickness="1" BorderBrush="#ddd" CornerRadius="5" >
-                <Expander>
-                    
-                    <Expander.Header>
-                        <Label Content="This is a long header text"></Label>
-                    </Expander.Header>
-                    
-                    <StackPanel>
-                        <Label Foreground="Black" Content="Hello World"></Label>
-                        <Label Foreground="Black" Content="Hello World"></Label>
-                        <Label Foreground="Black" Content="Hello World"></Label>
-                        <Label Foreground="Black" Content="Hello World"></Label>
-                        <Label Foreground="Black" Content="Hello World"></Label>
-                    </StackPanel>
-                </Expander>
+               
+                <ItemsControl ItemsSource="{Binding ChannelConfigurations}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander>
+                                <Expander.Header>
+                                    <Label Content="{Binding Key}" />
+                                </Expander.Header>
+                                
+                                <ItemsControl Items="{Binding}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{Binding Text}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Border>
         </controls:AnimatedPopup>
         

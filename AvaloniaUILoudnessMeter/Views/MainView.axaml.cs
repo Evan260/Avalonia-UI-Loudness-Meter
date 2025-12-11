@@ -2,6 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Threading;
 using AvaloniaUILoudnessMeter.ViewModels;
 
@@ -26,8 +27,15 @@ public partial class MainView : UserControl
         _channelConfigPopup = this.FindControl<Control>("ChannelConfigurationPopup") ?? throw new Exception("Cannot find Channel Configuration Popup Binding");
         _mainGrid = this.FindControl<Control>("MainGrid") ?? throw new Exception("Cannot find Main Grid Binding");
 
-        // Subscribe to LayoutUpdated to position the popup after layout is complete
+        // Subscribe to OnLayoutUpdated to position the popup after layout is complete
         LayoutUpdated += OnLayoutUpdated;
+    }
+
+    protected override async void OnLoaded(RoutedEventArgs e)
+    {
+        await ((MainViewModel)DataContext).LoadSettingsCommand.ExecuteAsync(null);
+        
+        base.OnLoaded(e);
     }
 
     private void OnLayoutUpdated(object? sender, EventArgs e)
