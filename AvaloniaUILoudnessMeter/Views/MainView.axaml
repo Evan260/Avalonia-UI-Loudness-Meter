@@ -208,6 +208,7 @@
        <!-- Bottom bar -->
        <Grid Grid.Row="2" Margin="20,10" Height="40" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto,Auto">
            <Button Grid.Column="0" 
+                   Margin="0,0,8,0"
                    Name="ChannelConfigurationButton" 
                    Command="{Binding #ChannelConfigurationPopup.OpenCommand}">
                Stereo

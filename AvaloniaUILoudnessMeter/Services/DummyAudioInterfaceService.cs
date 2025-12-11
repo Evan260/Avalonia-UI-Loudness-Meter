@@ -12,7 +12,7 @@ public class DummyAudioInterfaceService : IAudioInterfaceService
             new("Mono Stereo Configuration", "Mono", "Mono"),
             new("Mono Stereo Configuration", "Stereo", "Stereo"),
             new("5.1 Surround", "5.1 DTS - (L, R, Ls, Rs, C, LFE)", "5.1 DTS"),
-            new("5.1 ITU", "5.1 DTS - (L, R, C, LFE, Ls, Rs)", "5.1 ITU"),
-            new("5.1 FILM", "5.1 DTS - (L, C, R, Ls, Rs, LFE)", "5.1 FILM")
+            new("5.1 Surround", "5.1 DTS - (L, R, C, LFE, Ls, Rs)", "5.1 ITU"),
+            new("5.1 Surround", "5.1 DTS - (L, C, R, Ls, Rs, LFE)", "5.1 FILM")
         });
 }

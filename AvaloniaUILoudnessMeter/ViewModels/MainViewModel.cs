@@ -12,7 +12,7 @@ public partial class MainViewModel : ObservableObject
 {
     #region Private properties
     
-    private IAudioInterfaceService _audioInterfaceService;
+    private readonly IAudioInterfaceService _audioInterfaceService;
 
     #endregion
     
@@ -47,9 +47,7 @@ public partial class MainViewModel : ObservableObject
     private void ChannelConfigurationItemPressed(ChannelConfigurationItem item)
     {
         SelectedChannelConfiguration = item;
-        
-        // Close the menu
-        _channelConfigurationListIsOpen = false;
+        ChannelConfigurationListIsOpen = false;
     }
 
     [RelayCommand]
