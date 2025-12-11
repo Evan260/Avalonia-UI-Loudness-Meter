@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using AvaloniaUILoudnessMeter.DataModels;
 using AvaloniaUILoudnessMeter.Services;
-using CommunityToolkit.Mvvm.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -14,7 +12,7 @@ public partial class MainViewModel : ObservableObject
 {
     #region Private properties
     
-    private IAudioInterfaceService _audioInterfaceService;
+    private readonly IAudioInterfaceService _audioInterfaceService;
 
     #endregion
     
@@ -30,7 +28,7 @@ public partial class MainViewModel : ObservableObject
     private bool _channelConfigurationListIsOpen;
     
     [ObservableProperty]
-    private ObservableGroupedCollection<string, ChannelConfigurationItem> _channelConfigurations;
+    private ObservableCollection<ChannelConfigurationGroup>? _channelConfigurations;
     
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ChannelConfigurationButtonText))]
@@ -49,19 +47,20 @@ public partial class MainViewModel : ObservableObject
     private void ChannelConfigurationItemPressed(ChannelConfigurationItem item)
     {
         SelectedChannelConfiguration = item;
-        
-        // Close the menu
-        _channelConfigurationListIsOpen = false;
+        ChannelConfigurationListIsOpen = false;
     }
 
     [RelayCommand]
     private async Task LoadSettingsAsync()
     {
         var channelConfigurations = await _audioInterfaceService.GetChannelConfigurationListAsync();
-        
+
         // Create a grouping from the flat data
-        ChannelConfigurations = new ObservableGroupedCollection<string, ChannelConfigurationItem>(
-            channelConfigurations.GroupBy( item => item.Group));
+        var groups = channelConfigurations
+            .GroupBy(item => item.Group)
+            .Select(g => new ChannelConfigurationGroup(g));
+
+        ChannelConfigurations = new ObservableCollection<ChannelConfigurationGroup>(groups);
     }
     
     #endregion

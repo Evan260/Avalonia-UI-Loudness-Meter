@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AvaloniaUILoudnessMeter.ViewModels"
              xmlns:controls="using:AvaloniaUILoudnessMeter.Styles"
+             xmlns:models="using:AvaloniaUILoudnessMeter.DataModels"
              mc:Ignorable="d" d:DesignWidth="1048" d:DesignHeight="630"
              x:Class="AvaloniaUILoudnessMeter.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -43,20 +44,20 @@
                
                 <ItemsControl ItemsSource="{Binding ChannelConfigurations}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:ChannelConfigurationGroup">
                             <Expander>
                                 <Expander.Header>
                                     <Label Content="{Binding Key}" />
                                 </Expander.Header>
-                                
-                                <ItemsControl Items="{Binding}">
+
+                                <ItemsControl ItemsSource="{Binding}">
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
+                                        <DataTemplate x:DataType="models:ChannelConfigurationItem">
                                             <Button Content="{Binding Text}" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                
+
                             </Expander>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -207,6 +208,7 @@
        <!-- Bottom bar -->
        <Grid Grid.Row="2" Margin="20,10" Height="40" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto,Auto">
            <Button Grid.Column="0" 
+                   Margin="0,0,8,0"
                    Name="ChannelConfigurationButton" 
                    Command="{Binding #ChannelConfigurationPopup.OpenCommand}">
                Stereo
