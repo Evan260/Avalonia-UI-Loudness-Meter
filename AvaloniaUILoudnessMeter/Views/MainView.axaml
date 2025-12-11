@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AvaloniaUILoudnessMeter.ViewModels"
              xmlns:controls="using:AvaloniaUILoudnessMeter.Styles"
+             xmlns:models="using:AvaloniaUILoudnessMeter.DataModels"
+             xmlns:collections="using:CommunityToolkit.Mvvm.Collections"
              mc:Ignorable="d" d:DesignWidth="1048" d:DesignHeight="630"
              x:Class="AvaloniaUILoudnessMeter.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -43,20 +45,20 @@
                
                 <ItemsControl ItemsSource="{Binding ChannelConfigurations}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="collections:ObservableGroup(x:String, models:ChannelConfigurationItem)">
                             <Expander>
                                 <Expander.Header>
                                     <Label Content="{Binding Key}" />
                                 </Expander.Header>
-                                
-                                <ItemsControl Items="{Binding}">
+
+                                <ItemsControl ItemsSource="{Binding}">
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
+                                        <DataTemplate x:DataType="models:ChannelConfigurationItem">
                                             <Button Content="{Binding Text}" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                
+
                             </Expander>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
