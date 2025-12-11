@@ -45,7 +45,7 @@
                
                 <ItemsControl ItemsSource="{Binding ChannelConfigurations}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="collections:ObservableGroup(x:String, models:ChannelConfigurationItem)">
+                        <DataTemplate x:DataType="{x:Null}">
                             <Expander>
                                 <Expander.Header>
                                     <Label Content="{Binding Key}" />
