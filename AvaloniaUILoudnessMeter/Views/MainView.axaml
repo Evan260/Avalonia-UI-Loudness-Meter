@@ -5,7 +5,6 @@
              xmlns:vm="using:AvaloniaUILoudnessMeter.ViewModels"
              xmlns:controls="using:AvaloniaUILoudnessMeter.Styles"
              xmlns:models="using:AvaloniaUILoudnessMeter.DataModels"
-             xmlns:collections="using:CommunityToolkit.Mvvm.Collections"
              mc:Ignorable="d" d:DesignWidth="1048" d:DesignHeight="630"
              x:Class="AvaloniaUILoudnessMeter.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -45,7 +44,7 @@
                
                 <ItemsControl ItemsSource="{Binding ChannelConfigurations}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Null}">
+                        <DataTemplate x:DataType="models:ChannelConfigurationGroup">
                             <Expander>
                                 <Expander.Header>
                                     <Label Content="{Binding Key}" />
